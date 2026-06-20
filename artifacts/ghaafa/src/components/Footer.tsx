@@ -24,22 +24,20 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Brand Column */}
           <div>
-            <div className="footer-brand">
-              <div style={{
-                width: 50, height: 50,
-                background: "linear-gradient(135deg, #0B6B3A, #7ED957)",
-                borderRadius: "50%",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0,
-              }}>
-                <svg width="24" height="24" viewBox="0 0 60 60" fill="none">
-                  <path d="M30 5 L55 45 H5 Z" fill="white" opacity="0.9"/>
-                  <circle cx="30" cy="28" r="6" fill="white" opacity="0.85"/>
-                </svg>
-              </div>
-              <span className="footer-org-name">
-                جمعية غافة لإحياء التراث<br/>والهوية الوطنية
-              </span>
+            <div className="footer-brand" style={{ marginBottom: 16, alignItems: "center" }}>
+              <img
+                src="/logo.jpg"
+                alt="جمعية غافة"
+                style={{
+                  height: 80,
+                  width: "auto",
+                  objectFit: "contain",
+                  borderRadius: 8,
+                  background: "#fff",
+                  padding: "6px 10px",
+                  flexShrink: 0,
+                }}
+              />
             </div>
             <p className="footer-desc">
               تأسست الجمعية عام 2003م من قِبَل مجموعة من المهتمين والمتخصصين 

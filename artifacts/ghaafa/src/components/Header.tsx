@@ -106,23 +106,21 @@ export default function Header() {
           <div className="header-inner">
             {/* Logo */}
             <a href="/" className="logo-container">
-              <div className="logo-icon" style={{
-                width: 54, height: 54,
-                background: "linear-gradient(135deg, #0B6B3A, #7ED957)",
-                borderRadius: "50%",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0,
-                boxShadow: sticky ? "0 4px 15px rgba(11,107,58,0.3)" : "0 4px 15px rgba(0,0,0,0.3)",
-              }}>
-                <svg width="28" height="28" viewBox="0 0 60 60" fill="none">
-                  <path d="M30 5 L55 45 H5 Z" fill="white" opacity="0.9"/>
-                  <path d="M30 15 L48 42 H12 Z" fill="rgba(255,255,255,0.3)"/>
-                  <circle cx="30" cy="28" r="6" fill="white" opacity="0.85"/>
-                </svg>
-              </div>
-              <span className="logo-text" style={{ color: sticky ? "#0B6B3A" : "#fff" }}>
-                جمعية غافة لإحياء<br/>التراث والهوية الوطنية
-              </span>
+              <img
+                src="/logo.jpg"
+                alt="جمعية غافة"
+                className="logo-img"
+                style={{
+                  height: sticky ? 58 : 66,
+                  width: "auto",
+                  objectFit: "contain",
+                  borderRadius: 6,
+                  transition: "all 0.3s ease",
+                  filter: sticky ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.35))",
+                  background: sticky ? "transparent" : "rgba(255,255,255,0.92)",
+                  padding: sticky ? 0 : "3px",
+                }}
+              />
             </a>
 
             {/* Desktop Nav */}
