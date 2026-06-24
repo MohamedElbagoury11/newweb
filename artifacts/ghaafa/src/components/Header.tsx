@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { localizedPath, mockPagePath, useLanguage, type Language } from "@/lib/language";
+import { useLocation } from "wouter";
 
 type NavItem = {
   label: string;
@@ -114,7 +115,11 @@ export default function Header() {
   const [sticky, setSticky] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
+  const [location] = useLocation();
   const { isEnglish, lang } = useLanguage();
+  const isHome = location === "/" || location === "/en" || location === "/en/";
+  const solidHeader = !isHome || sticky;
+  const headerStateClass = sticky ? "header-sticky" : isHome ? "header-transparent" : "header-solid";
   const items = isEnglish ? englishNavItems : arabicNavItems;
   const languageHref = isEnglish ? "/" : "/en/";
   const languageLabel = isEnglish ? "العربية" : "English";
@@ -158,7 +163,7 @@ export default function Header() {
         </div>
       </div>
 
-      <header className={`site-header ${sticky ? "header-sticky" : "header-transparent"}`}>
+      <header className={`site-header ${headerStateClass}`}>
         <div className="container">
           <div className="header-inner">
             <a href={localizedPath("/", lang)} className="logo-container">
@@ -167,14 +172,14 @@ export default function Header() {
                 alt={orgName}
                 className="logo-img"
                 style={{
-                  height: sticky ? 58 : 66,
+                  height: solidHeader ? 58 : 66,
                   width: "auto",
                   objectFit: "contain",
                   borderRadius: 6,
                   transition: "all 0.3s ease",
-                  filter: sticky ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.35))",
-                  background: sticky ? "transparent" : "rgba(255,255,255,0.92)",
-                  padding: sticky ? 0 : "3px",
+                  filter: solidHeader ? "none" : "drop-shadow(0 2px 8px rgba(0,0,0,0.35))",
+                  background: solidHeader ? "transparent" : "rgba(255,255,255,0.92)",
+                  padding: solidHeader ? 0 : "3px",
                 }}
               />
             </a>
@@ -186,7 +191,7 @@ export default function Header() {
                     <a
                       href={getHref(item, lang)}
                       className={`nav-link ${item.active ? "active" : ""}`}
-                      style={{ color: sticky ? "#333" : "#fff" }}
+                      style={{ color: solidHeader ? "#333" : "#fff" }}
                     >
                       {item.label}
                       {item.children && (
@@ -208,9 +213,9 @@ export default function Header() {
             </nav>
 
             <button className="hamburger" onClick={() => setMobileOpen(true)} aria-label={isEnglish ? "Menu" : "القائمة"}>
-              <span style={{ background: sticky ? "#333" : "#fff" }} />
-              <span style={{ background: sticky ? "#333" : "#fff" }} />
-              <span style={{ background: sticky ? "#333" : "#fff" }} />
+              <span style={{ background: solidHeader ? "#333" : "#fff" }} />
+              <span style={{ background: solidHeader ? "#333" : "#fff" }} />
+              <span style={{ background: solidHeader ? "#333" : "#fff" }} />
             </button>
           </div>
         </div>

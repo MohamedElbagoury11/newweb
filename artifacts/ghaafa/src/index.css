@@ -170,6 +170,12 @@ a {
   background: transparent;
 }
 
+.site-header.header-solid {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
 .site-header.header-sticky {
   background: rgba(255,255,255,0.97);
   backdrop-filter: blur(10px);
@@ -177,18 +183,22 @@ a {
   top: 0;
 }
 
+.site-header.header-solid .nav-link,
 .site-header.header-sticky .nav-link {
   color: #333 !important;
 }
 
+.site-header.header-solid .nav-link:hover,
 .site-header.header-sticky .nav-link:hover {
   color: var(--primary) !important;
 }
 
+.site-header.header-solid .logo-text,
 .site-header.header-sticky .logo-text {
   color: var(--primary) !important;
 }
 
+.site-header.header-solid .hamburger span,
 .site-header.header-sticky .hamburger span {
   background: #333 !important;
 }
