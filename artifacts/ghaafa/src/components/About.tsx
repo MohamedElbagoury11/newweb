@@ -6,7 +6,7 @@ const content = {
     badge: "من نحن",
     title: "جمعية غافة لإحياء التراث والهوية الوطنية",
     paragraphs: [
-      "تأسست الجمعية عام 2003م من قبل مجموعة من المهتمين والمتخصصين في التراث، إيمانا منهم بأهمية الحفاظ على تراث الآباء والأجداد وتوارثه جيلا بعد جيل عبر آلاف السنين.",
+      "تأسست الجمعية عام 2025م من قبل مجموعة من المهتمين والمتخصصين في التراث، إيمانا منهم بأهمية الحفاظ على تراث الآباء والأجداد وتوارثه جيلا بعد جيل عبر آلاف السنين.",
       "تعمل الجمعية على صون الموروث الثقافي والحضاري في أنحاء دولة الإمارات العربية المتحدة من خلال برامج توعوية وأنشطة متنوعة تهدف إلى ترسيخ الهوية الوطنية وتعزيز الانتماء للوطن.",
       "بدأت جمعية غافة حلما ثم فكرة ثم أصبحت واقعا يساهم في حفظ الموروث الثقافي والعمراني في أنحاء الدولة وتعزيز الوعي بأهميته لدى الأجيال القادمة.",
     ],
@@ -18,7 +18,7 @@ const content = {
     badge: "About Us",
     title: "Ghaafa Association for Heritage Revival and National Identity",
     paragraphs: [
-      "The association was founded in 2003 by people passionate about heritage and specialized in preserving the legacy of parents and grandparents for future generations.",
+      "The association was founded in 2025 by people passionate about heritage and specialized in preserving the legacy of parents and grandparents for future generations.",
       "Ghaafa works to protect cultural and civilizational heritage across the United Arab Emirates through awareness programs and diverse activities that strengthen national identity.",
       "Ghaafa began as a dream, became an idea, and grew into a living initiative that helps preserve cultural and architectural heritage for the generations to come.",
     ],
@@ -94,7 +94,7 @@ export default function About() {
                 zIndex: 1,
               }}>
                 <div style={{ fontFamily: "Poppins, sans-serif", fontSize: 36, fontWeight: 800, lineHeight: 1, color: "#7ED957" }}>
-                  2003
+                  2025
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 600, marginTop: 4 }}>
                   {t.yearLabel}

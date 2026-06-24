@@ -3,7 +3,7 @@ import { localizedPath, mockPagePath, useLanguage, type Language } from "@/lib/l
 const content = {
   ar: {
     org: "جمعية غافة لإحياء التراث والهوية الوطنية",
-    desc: "تأسست الجمعية عام 2003م من قبل مجموعة من المهتمين والمتخصصين في التراث، إيمانا بأهمية الحفاظ على تراث الآباء والأجداد وتوارثه جيلا بعد جيل.",
+    desc: "تأسست الجمعية عام 2025 م من قبل مجموعة من المهتمين والمتخصصين في التراث، إيمانا بأهمية الحفاظ على تراث الآباء والأجداد وتوارثه جيلا بعد جيل.",
     quickTitle: "روابط سريعة",
     activityTitle: "الأنشطة",
     contactTitle: "تواصل معنا",
@@ -31,7 +31,7 @@ const content = {
   },
   en: {
     org: "Ghaafa Association for Heritage Revival and National Identity",
-    desc: "Founded in 2003 by heritage specialists and enthusiasts, Ghaafa works to preserve the legacy of parents and grandparents for future generations.",
+    desc: "Founded in 2025 by heritage specialists and enthusiasts, Ghaafa works to preserve the legacy of parents and grandparents for future generations.",
     quickTitle: "Quick Links",
     activityTitle: "Activities",
     contactTitle: "Contact Us",
