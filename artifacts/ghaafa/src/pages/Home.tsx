@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import About from "../components/About";
+import Chairman from "../components/Chairman";
 import KeyLinks from "../components/KeyLinks";
 import Activities from "../components/Activities";
 import Stats from "../components/Stats";
@@ -14,6 +15,7 @@ export default function Home() {
     <PageFrame>
       <Hero />
       <About />
+      <Chairman />
       <KeyLinks />
       <Activities />
       <Stats />
