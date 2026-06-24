@@ -999,6 +999,58 @@ a {
   font-weight: 800;
 }
 
+.mock-page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 28px;
+}
+
+.mock-page-main,
+.mock-page-side,
+.mock-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 12px 32px rgba(11,107,58,0.06);
+}
+
+.mock-page-main h2 {
+  font-size: 30px;
+  color: var(--foreground);
+  margin-bottom: 14px;
+}
+
+.mock-page-main p,
+.mock-card p,
+.mock-page-side li {
+  color: var(--text-muted);
+  font-family: 'Cairo', sans-serif;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.mock-page-side h3,
+.mock-card h3 {
+  color: var(--primary);
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+.mock-page-side ul {
+  display: grid;
+  gap: 10px;
+  padding-inline-start: 20px;
+}
+
+.mock-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
 /* ===== BACKGROUND SECTION ===== */
 .bg-section {
   position: relative;
@@ -1501,6 +1553,18 @@ a {
   .instagram-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .news-card-grid,
+  .media-card-grid,
+  .media-library-grid,
+  .mock-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mock-page-grid,
+  .news-list-card {
+    grid-template-columns: 1fr;
+  }
   
   .footer-grid {
     grid-template-columns: 1fr 1fr;
@@ -1539,6 +1603,22 @@ a {
   
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .section-heading-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .news-card-grid,
+  .media-card-grid,
+  .media-library-grid,
+  .mock-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero h1 {
+    font-size: 32px;
   }
   
   .hero-title {

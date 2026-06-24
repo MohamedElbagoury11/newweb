@@ -1,4 +1,4 @@
-import { useLanguage } from "@/lib/language";
+import { localizedPath, mockPagePath, useLanguage, type Language } from "@/lib/language";
 
 const content = {
   ar: {
@@ -7,8 +7,23 @@ const content = {
     quickTitle: "روابط سريعة",
     activityTitle: "الأنشطة",
     contactTitle: "تواصل معنا",
-    quickLinks: ["الصفحة الرئيسية", "من نحن", "هيكل الجمعية", "الأنشطة", "الرعاة والداعمون", "المركز الإعلامي", "اتصل بنا"],
-    activityLinks: ["الدورات التدريبية", "المحاضرات والندوات", "المعارض التراثية", "الرحلات", "المخيمات التراثية", "مطبوعات وإصدارات"],
+    quickLinks: [
+      { label: "الصفحة الرئيسية", href: "/" },
+      { label: "من نحن" },
+      { label: "هيكل الجمعية" },
+      { label: "الأنشطة" },
+      { label: "الرعاة والداعمون" },
+      { label: "المركز الإعلامي", href: "/media-library" },
+      { label: "اتصل بنا" },
+    ],
+    activityLinks: [
+      { label: "الدورات التدريبية" },
+      { label: "المحاضرات والندوات" },
+      { label: "المعارض التراثية", href: "/media-library" },
+      { label: "الرحلات" },
+      { label: "المخيمات التراثية" },
+      { label: "مطبوعات وإصدارات" },
+    ],
     address: "مقر جمعية غافة\nدولة الإمارات العربية المتحدة",
     rights: "جميع الحقوق محفوظة",
     builtBy: "تصميم وتطوير:",
@@ -20,14 +35,34 @@ const content = {
     quickTitle: "Quick Links",
     activityTitle: "Activities",
     contactTitle: "Contact Us",
-    quickLinks: ["Home", "About Us", "Association Structure", "Activities", "Sponsors and Supporters", "Media Center", "Contact Us"],
-    activityLinks: ["Training Courses", "Lectures and Seminars", "Heritage Exhibitions", "Trips", "Heritage Camps", "Publications and Releases"],
+    quickLinks: [
+      { label: "Home", href: "/" },
+      { label: "About Us" },
+      { label: "Association Structure" },
+      { label: "Activities" },
+      { label: "Sponsors and Supporters" },
+      { label: "Media Center", href: "/media-library" },
+      { label: "Contact Us" },
+    ],
+    activityLinks: [
+      { label: "Training Courses" },
+      { label: "Lectures and Seminars" },
+      { label: "Heritage Exhibitions", href: "/media-library" },
+      { label: "Trips" },
+      { label: "Heritage Camps" },
+      { label: "Publications and Releases" },
+    ],
     address: "Ghaafa Association Headquarters\nUnited Arab Emirates",
     rights: "All rights reserved",
     builtBy: "Designed and developed by:",
     team: "Technology Team",
   },
 };
+
+function getFooterHref(item: { label: string; href?: string }, lang: Language) {
+  if (item.href) return localizedPath(item.href, lang);
+  return mockPagePath(item.label, lang);
+}
 
 export default function Footer() {
   const { lang } = useLanguage();
@@ -56,7 +91,7 @@ export default function Footer() {
             <p className="footer-desc">{t.desc}</p>
             <div className="footer-social">
               {["facebook", "x", "instagram", "youtube"].map((label) => (
-                <a key={label} href="#" className="footer-social-link" title={label}>
+                <a key={label} href={mockPagePath(label, lang)} className="footer-social-link" title={label}>
                   <span style={{ fontSize: 12, fontWeight: 700 }}>{label[0].toUpperCase()}</span>
                 </a>
               ))}
@@ -67,8 +102,8 @@ export default function Footer() {
             <h4 className="footer-col-title">{t.quickTitle}</h4>
             <ul className="footer-links">
               {t.quickLinks.map((link) => (
-                <li key={link}>
-                  <a href="#">{link}</a>
+                <li key={link.label}>
+                  <a href={getFooterHref(link, lang)}>{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -78,8 +113,8 @@ export default function Footer() {
             <h4 className="footer-col-title">{t.activityTitle}</h4>
             <ul className="footer-links">
               {t.activityLinks.map((link) => (
-                <li key={link}>
-                  <a href="#">{link}</a>
+                <li key={link.label}>
+                  <a href={getFooterHref(link, lang)}>{link.label}</a>
                 </li>
               ))}
             </ul>

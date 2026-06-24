@@ -1,87 +1,121 @@
-import { useState, useEffect, useRef } from "react";
-import { localizedPath, useLanguage } from "@/lib/language";
+import { useEffect, useState } from "react";
+import { localizedPath, mockPagePath, useLanguage, type Language } from "@/lib/language";
 
-const navItems = [
-  { label: "الصفحة الرئيسية", href: "#", active: true },
+type NavItem = {
+  label: string;
+  routeLabel?: string;
+  active?: boolean;
+  href?: string;
+  children?: Array<{ label: string; href?: string; routeLabel?: string }>;
+};
+
+const arabicNavItems: NavItem[] = [
+  { label: "الصفحة الرئيسية", href: "/", active: true },
   {
     label: "من نحن",
     children: [
-      "كلمة رئيس مجلس الإدارة",
-      "عن الجمعية",
-      "الخطة الاستراتيجية للجمعية",
-      "مقر جمعية غافة",
+      { label: "كلمة رئيس مجلس الإدارة" },
+      { label: "عن الجمعية" },
+      { label: "الخطة الاستراتيجية للجمعية" },
+      { label: "مقر جمعية غافة" },
     ],
   },
   {
     label: "هيكل الجمعية",
     children: [
-      "المؤسسون والعضويات الفخرية",
-      "الجمعية العمومية",
-      "العضويات وأعضاء الجمعية",
+      { label: "المؤسسون والعضويات الفخرية" },
+      { label: "الجمعية العمومية" },
+      { label: "العضويات وأعضاء الجمعية" },
     ],
   },
   {
     label: "الأنشطة",
     children: [
-      "الزيارات والوفود",
-      "المحاضرات والندوات والمؤتمرات",
-      "الدورات التدريبية",
-      "المعارض التراثية والفنية",
-      "الرحلات",
-      "المخيمات التراثية",
-      "لجنة الناطقين باللغة الانجليزية",
+      { label: "الزيارات والوفود" },
+      { label: "المحاضرات والندوات والمؤتمرات" },
+      { label: "الدورات التدريبية" },
+      { label: "المعارض التراثية والفنية" },
+      { label: "الرحلات" },
+      { label: "المخيمات التراثية" },
+      { label: "لجنة الناطقين باللغة الإنجليزية" },
     ],
   },
-  { label: "الرعاة والداعمون", href: "#" },
+  { label: "الرعاة والداعمون" },
   {
-    label: "المركز الاعلامي",
+    label: "المركز الإعلامي",
     children: [
-      "الأخبار والفعاليات",
-      "معرض الصور",
-      "معرض الفيديو",
-      "التقارير السنوية",
+      { label: "الأخبار والفعاليات", href: "/news" },
+      { label: "معرض الصور", href: "/media-library" },
+      { label: "معرض الفيديو", href: "/media-library" },
+      { label: "التقارير السنوية" },
     ],
   },
-  { label: "اتصل بنا", href: "#" },
+  { label: "اتصل بنا" },
 ];
 
-const englishNavItems = [
+const englishNavItems: NavItem[] = [
   { label: "Home", href: "/", active: true },
   {
     label: "About Us",
-    children: ["Chairman's Message", "About the Association", "Strategic Plan", "Ghaafa Association Headquarters"],
+    children: [
+      { label: "Chairman's Message" },
+      { label: "About the Association" },
+      { label: "Strategic Plan" },
+      { label: "Ghaafa Association Headquarters" },
+    ],
   },
   {
     label: "Association Structure",
-    children: ["Founders and Honorary Members", "General Assembly", "Memberships and Members"],
+    children: [
+      { label: "Founders and Honorary Members" },
+      { label: "General Assembly" },
+      { label: "Memberships and Members" },
+    ],
   },
   {
     label: "Activities",
     children: [
-      "Visits and Delegations",
-      "Lectures, Seminars and Conferences",
-      "Training Courses",
-      "Heritage and Art Exhibitions",
-      "Trips",
-      "Heritage Camps",
-      "English Speakers Committee",
+      { label: "Visits and Delegations" },
+      { label: "Lectures, Seminars and Conferences" },
+      { label: "Training Courses" },
+      { label: "Heritage and Art Exhibitions" },
+      { label: "Trips" },
+      { label: "Heritage Camps" },
+      { label: "English Speakers Committee" },
     ],
   },
-  { label: "Sponsors and Supporters", href: "#" },
+  { label: "Sponsors and Supporters" },
   {
     label: "Media Center",
-    children: ["News and Events", "Photo Gallery", "Video Gallery", "Annual Reports"],
+    children: [
+      { label: "News and Events", href: "/news" },
+      { label: "Photo Gallery", href: "/media-library" },
+      { label: "Video Gallery", href: "/media-library" },
+      { label: "Annual Reports" },
+    ],
   },
-  { label: "Contact Us", href: "#" },
+  { label: "Contact Us" },
 ];
+
+function getHref(item: { label: string; href?: string; routeLabel?: string }, lang: Language) {
+  if (item.href) return localizedPath(item.href, lang);
+  return mockPagePath(item.routeLabel ?? item.label, lang);
+}
+
+function SocialIcon({ label }: { label: string }) {
+  return (
+    <span style={{ fontFamily: "Poppins, sans-serif", fontSize: 11, fontWeight: 800 }}>
+      {label}
+    </span>
+  );
+}
 
 export default function Header() {
   const [sticky, setSticky] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
-  const { isEnglish } = useLanguage();
-  const items = isEnglish ? englishNavItems : navItems;
-  const lang = isEnglish ? "en" : "ar";
+  const { isEnglish, lang } = useLanguage();
+  const items = isEnglish ? englishNavItems : arabicNavItems;
   const languageHref = isEnglish ? "/" : "/en/";
   const languageLabel = isEnglish ? "العربية" : "English";
   const phoneLabel = isEnglish ? "Contact us: +971 4 3539765" : "تواصل معنا: 971+ 4 3539765";
@@ -90,43 +124,27 @@ export default function Header() {
     : "جمعية غافة لإحياء التراث والهوية الوطنية";
 
   useEffect(() => {
-    const handleScroll = () => {
-      setSticky(window.scrollY > 60);
-    };
+    const handleScroll = () => setSticky(window.scrollY > 60);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile nav when clicking outside
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
   return (
     <>
-      {/* Top Bar */}
       <div className="topbar">
         <div className="container">
           <div className="topbar-inner">
             <div className="topbar-left">
               <div className="topbar-social">
-                <a href="https://www.facebook.com" target="_blank" rel="noreferrer" title="فايسبوك">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noreferrer" title="تويتر">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="https://www.instagram.com" target="_blank" rel="noreferrer" title="إنستغرام">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                </a>
-                <a href="https://www.youtube.com" target="_blank" rel="noreferrer" title="يوتيوب">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                </a>
+                <a href="https://www.facebook.com" target="_blank" rel="noreferrer" title="Facebook"><SocialIcon label="f" /></a>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer" title="X"><SocialIcon label="x" /></a>
+                <a href="https://www.instagram.com" target="_blank" rel="noreferrer" title="Instagram"><SocialIcon label="ig" /></a>
+                <a href="https://www.youtube.com" target="_blank" rel="noreferrer" title="YouTube"><SocialIcon label="yt" /></a>
               </div>
               <a href="tel:+97143539765" className="topbar-phone">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
@@ -140,12 +158,10 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Main Header */}
       <header className={`site-header ${sticky ? "header-sticky" : "header-transparent"}`}>
         <div className="container">
           <div className="header-inner">
-            {/* Logo */}
-            <a href="/" className="logo-container">
+            <a href={localizedPath("/", lang)} className="logo-container">
               <img
                 src="/logo.jpg"
                 alt={orgName}
@@ -163,30 +179,27 @@ export default function Header() {
               />
             </a>
 
-            {/* Desktop Nav */}
             <nav>
               <ul className="main-nav">
                 {items.map((item) => (
                   <li key={item.label} className="nav-item">
-                    <span className={`nav-link ${item.active ? "active" : ""}`} style={{ color: sticky ? "#333" : "#fff" }}>
+                    <a
+                      href={getHref(item, lang)}
+                      className={`nav-link ${item.active ? "active" : ""}`}
+                      style={{ color: sticky ? "#333" : "#fff" }}
+                    >
                       {item.label}
                       {item.children && (
                         <svg className="nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M6 9l6 6 6-6"/></svg>
                       )}
-                    </span>
+                    </a>
                     {item.children && (
                       <div className="dropdown-menu">
-                        {item.children.map((child) => {
-                          const childHref =
-                            child.includes("الأخبار") || child.includes("News")
-                              ? localizedPath("/news", lang)
-                              : child.includes("معرض") || child.includes("Gallery")
-                                ? localizedPath("/media-library", lang)
-                                : "#";
-                          return (
-                            <a key={child} href={childHref} className="dropdown-item">{child}</a>
-                          );
-                        })}
+                        {item.children.map((child) => (
+                          <a key={child.label} href={getHref(child, lang)} className="dropdown-item">
+                            {child.label}
+                          </a>
+                        ))}
                       </div>
                     )}
                   </li>
@@ -194,8 +207,7 @@ export default function Header() {
               </ul>
             </nav>
 
-            {/* Hamburger */}
-            <button className="hamburger" onClick={() => setMobileOpen(true)} aria-label="قائمة">
+            <button className="hamburger" onClick={() => setMobileOpen(true)} aria-label={isEnglish ? "Menu" : "القائمة"}>
               <span style={{ background: sticky ? "#333" : "#fff" }} />
               <span style={{ background: sticky ? "#333" : "#fff" }} />
               <span style={{ background: sticky ? "#333" : "#fff" }} />
@@ -204,15 +216,13 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Nav Overlay */}
       <div
         className={`mobile-nav-overlay ${mobileOpen ? "open" : ""}`}
         onClick={() => setMobileOpen(false)}
       />
 
-      {/* Mobile Nav */}
       <nav className={`mobile-nav ${mobileOpen ? "open" : ""}`} style={{ display: "block" }}>
-        <button className="mobile-nav-close" onClick={() => setMobileOpen(false)}>✕</button>
+        <button className="mobile-nav-close" onClick={() => setMobileOpen(false)}>×</button>
         <div style={{ padding: "10px 20px 16px", borderBottom: "1px solid #f0f0f0" }}>
           <div style={{ fontFamily: "Cairo, sans-serif", fontSize: "14px", fontWeight: 700, color: "#0B6B3A" }}>
             {orgName}
@@ -220,32 +230,30 @@ export default function Header() {
         </div>
         {items.map((item) => (
           <div key={item.label} className="mobile-nav-item">
-            <div
-              className="mobile-nav-link"
-              onClick={() => setOpenSub(openSub === item.label ? null : item.label)}
-            >
+            <a href={getHref(item, lang)} className="mobile-nav-link" onClick={() => !item.children && setMobileOpen(false)}>
               <span>{item.label}</span>
-              {item.children && (
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
-                  style={{ transform: openSub === item.label ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
-                  <path d="M6 9l6 6 6-6"/>
-                </svg>
-              )}
-            </div>
+            </a>
             {item.children && (
-              <div className={`mobile-sub-menu ${openSub === item.label ? "open" : ""}`}>
-                {item.children.map((child) => {
-                  const childHref =
-                    child.includes("الأخبار") || child.includes("News")
-                      ? localizedPath("/news", lang)
-                      : child.includes("معرض") || child.includes("Gallery")
-                        ? localizedPath("/media-library", lang)
-                        : "#";
-                  return (
-                    <a key={child} href={childHref} className="mobile-sub-link">{child}</a>
-                  );
-                })}
-              </div>
+              <>
+                <button
+                  className="mobile-nav-link"
+                  onClick={() => setOpenSub(openSub === item.label ? null : item.label)}
+                  style={{ width: "100%", border: 0, background: "transparent" }}
+                >
+                  <span>{isEnglish ? "Sub pages" : "الصفحات الفرعية"}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
+                    style={{ transform: openSub === item.label ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}>
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </button>
+                <div className={`mobile-sub-menu ${openSub === item.label ? "open" : ""}`}>
+                  {item.children.map((child) => (
+                    <a key={child.label} href={getHref(child, lang)} className="mobile-sub-link" onClick={() => setMobileOpen(false)}>
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         ))}

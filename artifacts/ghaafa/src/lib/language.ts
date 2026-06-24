@@ -17,3 +17,7 @@ export function localizedPath(path: string, lang: Language) {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return lang === "en" ? `/en${normalized === "/" ? "/" : normalized}` : normalized;
 }
+
+export function mockPagePath(label: string, lang: Language) {
+  return localizedPath(`/page/${encodeURIComponent(label)}`, lang);
+}
