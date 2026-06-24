@@ -17,7 +17,7 @@ export default function Hero() {
         preload="auto"
         className="absolute inset-0 h-full w-full object-cover"
       >
-        <source src={heroVideo} type="video/quicktime" />
+        <source src={heroVideo} type="video/mp4" />
       </video>
       <div className="hero-overlay" />
 
