@@ -7,10 +7,10 @@
     "tsBuildInfoFile": ".tsbuildinfo",
     "noEmit": true,
     "lib": ["es2022", "dom", "dom.iterable"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,
-    "types": ["node", "vite/client"],
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
     }
