@@ -1,11 +1,20 @@
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/lib/language";
 
-const stats = [
-  { number: 20, suffix: "+", label: "سنة من الخبرة" },
-  { number: 500, suffix: "+", label: "عضو فاعل" },
-  { number: 1200, suffix: "+", label: "نشاط وفعالية" },
-  { number: 50, suffix: "+", label: "شراكة استراتيجية" },
-];
+const stats = {
+  ar: [
+    { number: 20, suffix: "+", label: "سنة من الخبرة" },
+    { number: 500, suffix: "+", label: "عضو فاعل" },
+    { number: 1200, suffix: "+", label: "نشاط وفعالية" },
+    { number: 50, suffix: "+", label: "شراكة استراتيجية" },
+  ],
+  en: [
+    { number: 20, suffix: "+", label: "Years of Experience" },
+    { number: 500, suffix: "+", label: "Active Members" },
+    { number: 1200, suffix: "+", label: "Activities and Events" },
+    { number: 50, suffix: "+", label: "Strategic Partnerships" },
+  ],
+};
 
 function useCounter(target: number, active: boolean, duration = 2000) {
   const [count, setCount] = useState(0);
@@ -29,7 +38,7 @@ function useCounter(target: number, active: boolean, duration = 2000) {
   return count;
 }
 
-function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) {
+function StatItem({ stat, active }: { stat: (typeof stats.ar)[0]; active: boolean }) {
   const count = useCounter(stat.number, active);
   return (
     <div className="stat-item">
@@ -44,6 +53,7 @@ function StatItem({ stat, active }: { stat: typeof stats[0]; active: boolean }) 
 export default function Stats() {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -62,8 +72,8 @@ export default function Stats() {
     <section className="stats-section" ref={ref}>
       <div className="container">
         <div className="stats-grid">
-          {stats.map((stat, i) => (
-            <StatItem key={i} stat={stat} active={active} />
+          {stats[lang].map((stat) => (
+            <StatItem key={stat.label} stat={stat} active={active} />
           ))}
         </div>
       </div>

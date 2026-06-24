@@ -1,11 +1,25 @@
 import heroVideo from "@/assets/videos/shutterstock_1093125227.mov";
+import { useLanguage } from "@/lib/language";
 
-const heroContent = {
-  title: "جمعية غافة لإحياء التراث والهوية الوطنية",
-  subtitle:" المحافظة على منظومة القيم الأصيلة و الهوية الوطنية وتجسيد العادات والتقاليد لدى أفراد المجتمع لتحقيق حياة مستدامة",
+const content = {
+  ar: {
+    title: "جمعية غافة لإحياء التراث والهوية الوطنية",
+    subtitle:" المحافظة على منظومة القيم الأصيلة و الهوية الوطنية وتجسيد العادات والتقاليد لدى أفراد المجتمع لتحقيق حياة مستدامة",
+    primaryCta: "اكتشف أكثر",
+    secondaryCta: "أنشطتنا",
+  },
+  en: {
+    title: "Ghaafa Association for Heritage Revival and National Identity",
+    subtitle: "Preserving authentic values and national identity while bringing community traditions and customs to life for a sustainable future.",
+    primaryCta: "Discover More",
+    secondaryCta: "Our Activities",
+  },
 };
 
 export default function Hero() {
+  const { lang } = useLanguage();
+  const heroContent = content[lang];
+
   return (
     <section className="hero-section">
       {/* Background */}
@@ -17,7 +31,7 @@ export default function Hero() {
         preload="auto"
         className="absolute inset-0 h-full w-full object-cover"
       >
-        <source src={heroVideo} type="video/mp4" />
+        <source src={heroVideo} />
       </video>
       <div className="hero-overlay" />
 
@@ -49,11 +63,11 @@ export default function Hero() {
           <h1 className="hero-title">{heroContent.title}</h1>
           <p className="hero-subtitle">{heroContent.subtitle}</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#about" className="hero-btn">اكتشف أكثر</a>
+            <a href="#about" className="hero-btn">{heroContent.primaryCta}</a>
             <a href="#activities" className="hero-btn" style={{
               background: "transparent",
               border: "2px solid rgba(255,255,255,0.6)",
-            }}>أنشطتنا</a>
+            }}>{heroContent.secondaryCta}</a>
           </div>
         </div>
       </div>

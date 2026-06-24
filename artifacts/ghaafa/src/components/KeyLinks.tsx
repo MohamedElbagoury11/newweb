@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/lib/language";
 
 const boxes = [
   {
@@ -39,8 +40,29 @@ const boxes = [
   },
 ];
 
+const englishBoxes = [
+  {
+    ...boxes[0],
+    title: "General Assembly",
+    desc: "The General Assembly includes active members who have completed at least six months of association membership and meets at least once a year.",
+  },
+  {
+    ...boxes[1],
+    title: "Strategic Plan",
+    desc: "Preserving heritage, managing historic sites, spreading heritage awareness, and building an active, effective association.",
+  },
+  {
+    ...boxes[2],
+    title: "About Us",
+    desc: "Ghaafa began as a dream, then an idea, and became a reality that contributes to preserving cultural and architectural heritage.",
+  },
+];
+
 export default function KeyLinks() {
   const ref = useRef<HTMLDivElement>(null);
+  const { lang } = useLanguage();
+  const sectionTitle = lang === "en" ? "Key Links" : "روابط رئيسية";
+  const items = lang === "en" ? englishBoxes : boxes;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,11 +85,11 @@ export default function KeyLinks() {
     <section id="key-links" className="key-links-section" ref={ref}>
       <div className="container">
         <div className="section-title-block fade-in-up">
-          <h2 className="section-title">روابط رئيسية</h2>
+          <h2 className="section-title">{sectionTitle}</h2>
         </div>
 
         <div className="icon-boxes-grid">
-          {boxes.map((box, i) => (
+          {items.map((box, i) => (
             <a key={i} href={box.href} className="icon-box fade-in-up">
               <div className="icon-box-icon">
                 {box.icon}

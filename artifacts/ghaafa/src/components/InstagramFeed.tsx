@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/lib/language";
 
 const instaPosts = [
   "https://images.unsplash.com/photo-1624948465027-6f9b51067557?w=400&q=80",
@@ -13,6 +14,9 @@ const instaPosts = [
 
 export default function InstagramFeed() {
   const ref = useRef<HTMLDivElement>(null);
+  const { lang } = useLanguage();
+  const title = lang === "en" ? "Follow Us on Instagram" : "تابعونا على إنستغرام";
+  const postAlt = lang === "en" ? "Post" : "منشور";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,7 +39,7 @@ export default function InstagramFeed() {
     <section className="instagram-section" ref={ref}>
       <div className="container">
         <div className="section-title-block fade-in-up">
-          <h2 className="section-title">تابعونا على إنستغرام</h2>
+          <h2 className="section-title">{title}</h2>
           <p style={{
             fontFamily: "Cairo, sans-serif",
             fontSize: 15,
@@ -62,7 +66,7 @@ export default function InstagramFeed() {
               rel="noreferrer"
               className="instagram-item fade-in-up"
             >
-              <img src={url} alt={`منشور ${i + 1}`} loading="lazy" />
+              <img src={url} alt={`${postAlt} ${i + 1}`} loading="lazy" />
               <div className="instagram-overlay">
                 <span className="instagram-overlay-icon">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="white">

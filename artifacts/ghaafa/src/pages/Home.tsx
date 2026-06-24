@@ -1,25 +1,26 @@
-import Header from "../components/Header";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import KeyLinks from "../components/KeyLinks";
 import Activities from "../components/Activities";
 import Stats from "../components/Stats";
 import BgSection from "../components/BgSection";
+import NewsPreview from "../components/NewsPreview";
+import MediaPreview from "../components/MediaPreview";
 import InstagramFeed from "../components/InstagramFeed";
-import Footer from "../components/Footer";
+import PageFrame from "../components/PageFrame";
 
 export default function Home() {
   return (
-    <div dir="rtl">
-      <Header />
+    <PageFrame>
       <Hero />
       <About />
       <KeyLinks />
       <Activities />
       <Stats />
+      <NewsPreview />
+      <MediaPreview />
       <BgSection />
       <InstagramFeed />
-      <Footer />
-    </div>
+    </PageFrame>
   );
 }

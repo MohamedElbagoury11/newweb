@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { localizedPath, useLanguage } from "@/lib/language";
 
 const navItems = [
   { label: "الصفحة الرئيسية", href: "#", active: true },
@@ -44,10 +45,49 @@ const navItems = [
   { label: "اتصل بنا", href: "#" },
 ];
 
+const englishNavItems = [
+  { label: "Home", href: "/", active: true },
+  {
+    label: "About Us",
+    children: ["Chairman's Message", "About the Association", "Strategic Plan", "Ghaafa Association Headquarters"],
+  },
+  {
+    label: "Association Structure",
+    children: ["Founders and Honorary Members", "General Assembly", "Memberships and Members"],
+  },
+  {
+    label: "Activities",
+    children: [
+      "Visits and Delegations",
+      "Lectures, Seminars and Conferences",
+      "Training Courses",
+      "Heritage and Art Exhibitions",
+      "Trips",
+      "Heritage Camps",
+      "English Speakers Committee",
+    ],
+  },
+  { label: "Sponsors and Supporters", href: "#" },
+  {
+    label: "Media Center",
+    children: ["News and Events", "Photo Gallery", "Video Gallery", "Annual Reports"],
+  },
+  { label: "Contact Us", href: "#" },
+];
+
 export default function Header() {
   const [sticky, setSticky] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSub, setOpenSub] = useState<string | null>(null);
+  const { isEnglish } = useLanguage();
+  const items = isEnglish ? englishNavItems : navItems;
+  const lang = isEnglish ? "en" : "ar";
+  const languageHref = isEnglish ? "/" : "/en/";
+  const languageLabel = isEnglish ? "العربية" : "English";
+  const phoneLabel = isEnglish ? "Contact us: +971 4 3539765" : "تواصل معنا: 971+ 4 3539765";
+  const orgName = isEnglish
+    ? "Ghaafa Association for Heritage Revival and National Identity"
+    : "جمعية غافة لإحياء التراث والهوية الوطنية";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,11 +130,11 @@ export default function Header() {
               </div>
               <a href="tel:+97143539765" className="topbar-phone">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                تواصل معنا: 971+ 4 3539765
+                {phoneLabel}
               </a>
             </div>
             <div className="topbar-right">
-              <a href="/en/" className="lang-toggle">English</a>
+              <a href={languageHref} className="lang-toggle">{languageLabel}</a>
             </div>
           </div>
         </div>
@@ -108,7 +148,7 @@ export default function Header() {
             <a href="/" className="logo-container">
               <img
                 src="/logo.jpg"
-                alt="جمعية غافة"
+                alt={orgName}
                 className="logo-img"
                 style={{
                   height: sticky ? 58 : 66,
@@ -126,7 +166,7 @@ export default function Header() {
             {/* Desktop Nav */}
             <nav>
               <ul className="main-nav">
-                {navItems.map((item) => (
+                {items.map((item) => (
                   <li key={item.label} className="nav-item">
                     <span className={`nav-link ${item.active ? "active" : ""}`} style={{ color: sticky ? "#333" : "#fff" }}>
                       {item.label}
@@ -136,9 +176,17 @@ export default function Header() {
                     </span>
                     {item.children && (
                       <div className="dropdown-menu">
-                        {item.children.map((child) => (
-                          <a key={child} href="#" className="dropdown-item">{child}</a>
-                        ))}
+                        {item.children.map((child) => {
+                          const childHref =
+                            child.includes("الأخبار") || child.includes("News")
+                              ? localizedPath("/news", lang)
+                              : child.includes("معرض") || child.includes("Gallery")
+                                ? localizedPath("/media-library", lang)
+                                : "#";
+                          return (
+                            <a key={child} href={childHref} className="dropdown-item">{child}</a>
+                          );
+                        })}
                       </div>
                     )}
                   </li>
@@ -167,10 +215,10 @@ export default function Header() {
         <button className="mobile-nav-close" onClick={() => setMobileOpen(false)}>✕</button>
         <div style={{ padding: "10px 20px 16px", borderBottom: "1px solid #f0f0f0" }}>
           <div style={{ fontFamily: "Cairo, sans-serif", fontSize: "14px", fontWeight: 700, color: "#0B6B3A" }}>
-            جمعية غافة لإحياء التراث والهوية الوطنية
+            {orgName}
           </div>
         </div>
-        {navItems.map((item) => (
+        {items.map((item) => (
           <div key={item.label} className="mobile-nav-item">
             <div
               className="mobile-nav-link"
@@ -186,9 +234,17 @@ export default function Header() {
             </div>
             {item.children && (
               <div className={`mobile-sub-menu ${openSub === item.label ? "open" : ""}`}>
-                {item.children.map((child) => (
-                  <a key={child} href="#" className="mobile-sub-link">{child}</a>
-                ))}
+                {item.children.map((child) => {
+                  const childHref =
+                    child.includes("الأخبار") || child.includes("News")
+                      ? localizedPath("/news", lang)
+                      : child.includes("معرض") || child.includes("Gallery")
+                        ? localizedPath("/media-library", lang)
+                        : "#";
+                  return (
+                    <a key={child} href={childHref} className="mobile-sub-link">{child}</a>
+                  );
+                })}
               </div>
             )}
           </div>

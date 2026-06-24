@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useLanguage } from "@/lib/language";
 
 const activities = [
   {
@@ -63,8 +64,23 @@ const activities = [
   },
 ];
 
+const englishTitles = [
+  "Training Courses",
+  "Conferences and Seminars",
+  "Lectures",
+  "Publications and Releases",
+  "Local and International Trips",
+  "Heritage and Art Exhibitions",
+];
+
 export default function Activities() {
   const ref = useRef<HTMLDivElement>(null);
+  const { lang } = useLanguage();
+  const sectionTitle = lang === "en" ? "Association Activities" : "نشاطات الجمعية";
+  const items = activities.map((activity, index) => ({
+    ...activity,
+    title: lang === "en" ? englishTitles[index] : activity.title,
+  }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -87,10 +103,10 @@ export default function Activities() {
     <section id="activities" className="activities-section" ref={ref}>
       <div className="container">
         <div className="section-title-block fade-in-up">
-          <h2 className="section-title">نشاطات الجمعية</h2>
+          <h2 className="section-title">{sectionTitle}</h2>
         </div>
         <div className="activities-grid fade-in-up">
-          {activities.map((act, i) => (
+          {items.map((act, i) => (
             <a key={i} href={act.href} className="activity-item">
               <span className="activity-icon">{act.icon}</span>
               <h4 className="activity-title">{act.title}</h4>

@@ -1,5 +1,7 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import Home from "./pages/Home";
+import NewsPage from "./pages/NewsPage";
+import MediaLibraryPage from "./pages/MediaLibraryPage";
 
 function NotFound() {
   return (
@@ -14,6 +16,12 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/en" component={Home} />
+      <Route path="/en/" component={Home} />
+      <Route path="/news" component={NewsPage} />
+      <Route path="/en/news" component={NewsPage} />
+      <Route path="/media-library" component={MediaLibraryPage} />
+      <Route path="/en/media-library" component={MediaLibraryPage} />
       <Route component={NotFound} />
     </Switch>
   );
